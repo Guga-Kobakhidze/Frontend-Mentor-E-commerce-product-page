@@ -97,15 +97,19 @@ img {
   position: relative;
 }
 
-.navigation a:hover::before,
-.navigation a:focus::before {
+.navigation a::before {
   content: "";
   position: absolute;
   bottom: -35px;
-  width: 100%;
+  width: 0;
   height: 3px;
   background-color: var(--orange-color);
-  z-index: 100;
+  transition: width 0.3s;
+}
+
+.navigation a:hover::before,
+.navigation a:focus::before {
+  width: 100%;
 }
 
 .navigation a:hover,
