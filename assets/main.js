@@ -44,8 +44,10 @@ plusBtn.addEventListener("click", () => {
 });
 
 minusBtn.addEventListener("click", () => {
-  result -= 1;
-  equalNum.textContent = result;
+  if (result > 0) {
+    result -= 1;
+    equalNum.textContent = result;
+  }
 });
 
 // price
@@ -57,24 +59,30 @@ price.textContent = priceString;
 
 const priceNumber = parseInt(priceString.replace("$", ""));
 
+const textEmpty = document.querySelector(".textEmpty");
+
 // Add to cart Button -->
 
 let firstResult = 0;
 
 addToCart.addEventListener("click", () => {
   if (result > 0) {
-    firstResult += result;
+    firstResult = result;
     proQuantity.textContent = firstResult;
     proQuantity1.textContent = firstResult;
 
     lastPrice.textContent = `$${firstResult * priceNumber}.00`;
     productDetails.style.scale = "1";
+    result = 0;
+    equalNum.textContent = 0;
+    textEmpty.style.display = "none";
   }
 
   trash.addEventListener("click", () => {
     productDetails.style.scale = "0";
     proQuantity.textContent = "0";
     firstResult = 0;
+    textEmpty.style.display = "block";
   });
 });
 
@@ -126,6 +134,8 @@ const imgFunc = (
     currentIndex = (currentIndex + 1) % smallImages.length;
     mainImg.src = smallImages[currentIndex].src;
   });
+
+  console.log(smallImages.length);
   return;
 };
 
@@ -152,6 +162,12 @@ mainImg.addEventListener("click", () => {
 
 overlayClose.addEventListener("click", () => {
   overlay.style.display = "none";
+});
+
+overlay.addEventListener("click", (event) => {
+  if (event.target === overlay) {
+    overlay.style.display = "none";
+  }
 });
 
 imgFunc(overlayImg, overlaySmImgs, smallImageHover, leftHandle1, rightHandle1); // for overlay
